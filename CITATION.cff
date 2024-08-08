@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Nakayama"
+    given-names: "Hiroki"
+  - family-names: "Passaglia"
+    given-names: "Sam"
+  - family-names: "Yu"
+    given-names: "Sam"
+title: "no-name"
+version: 1.0.0
+url: "https://github.com/yuzuai/"

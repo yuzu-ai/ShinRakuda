@@ -1,0 +1,351 @@
+models:
+  - model_name: Llama-3-Swallow-8B-v0.1
+    api: false
+    provider: huggingface
+    system_prompt: "あなたは誠実で優秀な日本人のアシスタントです。特に指示が無い場合は、常に日本語で回答してください。"
+    do_sample: True
+    vllm_config:
+      model: tokyotech-llm/Llama-3-Swallow-8B-v0.1
+      max_model_len: 1024
+    vllm_sampling_params:
+      temperature: 0.1
+      top_p: 0.95
+      max_tokens: 300
+      repetition_penalty: 1.2
+    hf_pipeline:
+      task: text-generation
+      model: tokyotech-llm/Llama-3-Swallow-8B-v0.1
+      torch_dtype: auto
+      max_new_tokens: 1000
+      device_map: auto
+      trust_remote_code: True
+      return_full_text: False
+    hf_chat_template:
+      chat_template: |
+        {% set error_message = '' %}
+        {% if messages[0]['role'] == 'system' %}
+            {% set loop_messages = messages[1:] %}
+            {% set system_message = '<<SYS>>\n' + messages[0]['content'].strip() + '\n<</SYS>>\n\n' %}
+            {% if system_message.strip() != '' %}
+                {{ bos_token + '[INST] ' + system_message.strip() + ' [/INST]' }}
+            {% endif %}
+        {% else %}
+            {% set loop_messages = messages %}
+        {% endif %}
+
+        {% for message in loop_messages %}
+            {% if message['role'] == 'user' %}
+                {{ bos_token + '[INST] ' + message['content'].strip() + ' [/INST]' }}
+            {% elif message['role'] == 'assistant' %}
+                {{ ' ' + message['content'].strip() + ' ' + eos_token }}
+            {% endif %}
+        {% endfor %}
+
+        {% if error_message %}
+            {{ error_message }}
+        {% endif %}
+      tokenize: False
+      add_generation_prompt: True
+  - model_name: Llama-3-Swallow-70B-Instruct-v0.1
+    api: false
+    provider: huggingface
+    system_prompt: "あなたは誠実で優秀な日本人のアシスタントです。特に指示が無い場合は、常に日本語で回答してください。"
+    do_sample: True
+    vllm_config:
+      model: tokyotech-llm/Llama-3-Swallow-70B-Instruct-v0.1
+      max_model_len: 1024
+    vllm_sampling_params:
+      temperature: 0.1
+      top_p: 0.95
+      max_tokens: 300
+      repetition_penalty: 1.2
+    hf_pipeline:
+      task: text-generation
+      model: tokyotech-llm/Llama-3-Swallow-70B-Instruct-v0.1
+      torch_dtype: auto
+      max_new_tokens: 1000
+      device_map: auto
+      trust_remote_code: True
+      return_full_text: False
+    hf_chat_template:
+      chat_template: |
+        {% set error_message = '' %}
+        {% if messages[0]['role'] == 'system' %}
+            {% set loop_messages = messages[1:] %}
+            {% set system_message = '<<SYS>>\n' + messages[0]['content'].strip() + '\n<</SYS>>\n\n' %}
+            {% if system_message.strip() != '' %}
+                {{ bos_token + '[INST] ' + system_message.strip() + ' [/INST]' }}
+            {% endif %}
+        {% else %}
+            {% set loop_messages = messages %}
+        {% endif %}
+
+        {% for message in loop_messages %}
+            {% if message['role'] == 'user' %}
+                {{ bos_token + '[INST] ' + message['content'].strip() + ' [/INST]' }}
+            {% elif message['role'] == 'assistant' %}
+                {{ ' ' + message['content'].strip() + ' ' + eos_token }}
+            {% endif %}
+        {% endfor %}
+
+        {% if error_message %}
+            {{ error_message }}
+        {% endif %}
+      tokenize: False
+      add_generation_prompt: True
+  - model_name: Llama-3-ELYZA-JP-8B
+    api: false
+    provider: huggingface
+    system_prompt: "あなたは誠実で優秀な日本人のアシスタントです。特に指示が無い場合は、常に日本語で回答してください。"
+    do_sample: True
+    vllm_config:
+      model: elyza/Llama-3-ELYZA-JP-8B
+      max_model_len: 1024
+    vllm_sampling_params:
+      temperature: 0.1
+      top_p: 0.95
+      max_tokens: 300
+      repetition_penalty: 1.2
+    hf_pipeline:
+      task: text-generation
+      model: elyza/Llama-3-ELYZA-JP-8B
+      torch_dtype: auto
+      max_new_tokens: 1000
+      device_map: auto
+      trust_remote_code: True
+      return_full_text: False
+    hf_chat_template:
+      chat_template: |
+        {% set error_message = '' %}
+        {% if messages[0]['role'] == 'system' %}
+            {% set loop_messages = messages[1:] %}
+            {% set system_message = '<<SYS>>\n' + messages[0]['content'].strip() + '\n<</SYS>>\n\n' %}
+            {% if system_message.strip() != '' %}
+                {{ bos_token + '[INST] ' + system_message.strip() + ' [/INST]' }}
+            {% endif %}
+        {% else %}
+            {% set loop_messages = messages %}
+        {% endif %}
+
+        {% for message in loop_messages %}
+            {% if message['role'] == 'user' %}
+                {{ bos_token + '[INST] ' + message['content'].strip() + ' [/INST]' }}
+            {% elif message['role'] == 'assistant' %}
+                {{ ' ' + message['content'].strip() + ' ' + eos_token }}
+            {% endif %}
+        {% endfor %}
+
+        {% if error_message %}
+            {{ error_message }}
+        {% endif %}
+      tokenize: False
+      add_generation_prompt: True
+  - model_name: Rakuten-7B
+    api: false
+    provider: huggingface
+    system_prompt: "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions."
+    do_sample: True
+    vllm_config:
+      model: Rakuten/RakutenAI-7B-chat
+      max_model_len: 1024
+    vllm_sampling_params:
+      temperature: 0.1
+      top_p: 0.95
+      max_tokens: 300
+      repetition_penalty: 1.2
+    hf_pipeline:
+      task: text-generation
+      model: Rakuten/RakutenAI-7B-chat
+      torch_dtype: auto
+      max_new_tokens: 1000
+      device_map: auto
+      trust_remote_code: True
+      return_full_text: False
+    hf_chat_template:
+      add_generation_prompt: True
+      tokenize: False
+      chat_template: |
+        {% set error_message = '' %}
+        {% if messages[0]['role'] == 'system' %}
+            SYSTEM: {{ messages[0]['content'].strip() }}
+            {% set loop_messages = messages[1:] %}
+        {% else %}
+            {% set loop_messages = messages %}
+        {% endif %}
+
+        {% for message in loop_messages %}
+            {% if message['role'] == 'user' %}
+                USER: {{ message['content'] }}
+            {% elif message['role'] == 'assistant' %}
+                ASSISTANT: {{ message['content'] }}
+            {% endif %}
+        {% endfor %}
+
+        {% if error_message %}
+            {{ error_message }}
+        {% endif %}
+  - model_name: karakuri-lm-8x7b-chat-v0.1
+    api: false
+    provider: huggingface
+    system_prompt: "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions."
+    do_sample: True
+    vllm_config:
+      model: karakuri-ai/karakuri-lm-8x7b-chat-v0.1
+      max_model_len: 1024
+    vllm_sampling_params:
+      temperature: 0.1
+      top_p: 0.95
+      max_tokens: 300
+      repetition_penalty: 1.2
+    hf_pipeline:
+      task: text-generation
+      model: karakuri-ai/karakuri-lm-8x7b-chat-v0.1
+      torch_dtype: auto
+      max_new_tokens: 1000
+      device_map: auto
+      trust_remote_code: True
+      return_full_text: False
+    hf_chat_template:
+      add_generation_prompt: True
+      tokenize: False
+      chat_template: |
+        {# Initialize error message if needed #}
+        {% set error_message = '' %}
+
+        {# Check the role of the first message and set the system prompt if it's from the system #}
+        {% if messages[0]['role'] == 'system' %}
+            SYSTEM: {{ messages[0]['content'].strip() }}
+            {# Adjust the message loop to skip the first message if it's a system prompt #}
+            {% set loop_messages = messages[1:] %}
+        {% else %}
+            {# If no system prompt, include all messages in the loop #}
+            {% set loop_messages = messages %}
+        {% endif %}
+
+        {# Display any error message that might have been set #}
+        {% if error_message %}
+            {{ error_message }}
+        {% endif %}
+  - model_name: Qwen2-7B-Instruct
+    api: false
+    provider: huggingface
+    system_prompt: "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions."
+    do_sample: True
+    vllm_config:
+      model: Qwen/Qwen2-7B-Instruct
+      max_model_len: 1024
+    vllm_sampling_params:
+      temperature: 0.1
+      top_p: 0.95
+      max_tokens: 300
+      repetition_penalty: 1.2
+    hf_pipeline:
+      task: text-generation
+      model: Qwen/Qwen2-7B-Instruct
+      torch_dtype: auto
+      max_new_tokens: 1000
+      device_map: auto
+      trust_remote_code: True
+      return_full_text: False
+    hf_chat_template:
+      add_generation_prompt: True
+      tokenize: False
+      chat_template: |
+        {# Initialize error message if needed #}
+        {% set error_message = '' %}
+
+        {# Check the role of the first message and set the system prompt if it's from the system #}
+        {% if messages[0]['role'] == 'system' %}
+            SYSTEM: {{ messages[0]['content'].strip() }}
+            {# Adjust the message loop to skip the first message if it's a system prompt #}
+            {% set loop_messages = messages[1:] %}
+        {% else %}
+            {# If no system prompt, include all messages in the loop #}
+            {% set loop_messages = messages %}
+        {% endif %}
+
+        {# Display any error message that might have been set #}
+        {% if error_message %}
+            {{ error_message }}
+        {% endif %}   
+  - model_name: Qwen2-72B-Instruct
+    api: false
+    provider: huggingface
+    system_prompt: "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions."
+    do_sample: True
+    vllm_config:
+      model: Qwen/Qwen2-72B-Instruct
+      max_model_len: 1024
+    vllm_sampling_params:
+      temperature: 0.1
+      top_p: 0.95
+      max_tokens: 300
+      repetition_penalty: 1.2
+    hf_pipeline:
+      task: text-generation
+      model: Qwen/Qwen2-72B-Instruct
+      torch_dtype: auto
+      max_new_tokens: 1000
+      device_map: auto
+      trust_remote_code: True
+      return_full_text: False
+    hf_chat_template:
+      add_generation_prompt: True
+      tokenize: False
+      chat_template: |
+        {# Initialize error message if needed #}
+        {% set error_message = '' %}
+
+        {# Check the role of the first message and set the system prompt if it's from the system #}
+        {% if messages[0]['role'] == 'system' %}
+            SYSTEM: {{ messages[0]['content'].strip() }}
+            {# Adjust the message loop to skip the first message if it's a system prompt #}
+            {% set loop_messages = messages[1:] %}
+        {% else %}
+            {# If no system prompt, include all messages in the loop #}
+            {% set loop_messages = messages %}
+        {% endif %}
+
+        {# Display any error message that might have been set #}
+        {% if error_message %}
+            {{ error_message }}
+        {% endif %}   
+
+
+eval_datasets:
+  - dataset_name: japanese_mt_bench
+    judge_prompt_template: |
+      [指示]
+      公平な判断者として行動し、以下に表示されるユーザーの質問に対するAIアシスタントの応答の品質を評価してください。あなたの評価は、応答の有用性、関連性、正確性、深さ、創造性、詳細度などの要素を考慮すべきです。AIアシスタントの返答の言語は、ユーザーが使用している言語と一致しているべきで、そうでない場合は減点されるべきです。評価は短い説明から始めてください。できるだけ客観的であること。説明を提供した後、このフォーマットに厳密に従って1から10までのスケールで応答を評価する必要があります："[[評価]]"、例えば："評価：[[5]]"。
+
+      {% set question_count = 0 %}
+      {% for message in messages %}
+          {% if message.role == 'user' %}
+              {% set question_count = question_count + 1 %}
+              [質問]
+              {{ message.content }}
+              {% if query.get('reference_answers', None) and query.reference_answers|length >= question_count %}
+                [参考回答の開始]
+                {{ query.reference_answers[question_count - 1] }}
+                [参考回答の終了]
+        {% endif %}
+          {% elif message.role == 'assistant' %}
+              [アシスタントの回答の開始]
+              {{ message.content }}
+              [アシスタントの回答の終了]
+          {% endif %}
+      {% endfor %}
+    num_questions: 5
+    random_questions: False
+    use_jinja: true
+    score_keyword: 評価：\[\[(\d+)\]\]
+
+judge_models:
+  - model_name: gpt-4-turbo-preview
+    api: true
+    provider: openai
+
+eval_datasets_dir: ./datasets
+log_dir: ./logs
+result_dir: ./results
+inference_library: vllm
