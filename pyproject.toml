@@ -25,7 +25,7 @@ python-dotenv= "^1.0.1"
 sentencepiece= "^0.2.0"
 matplotlib = "^3.8.4"
 tenacity= "^8.2.3"
-vllm="^0.4.0.post1"
+vllm="^0.5.5"
 filelock="^3.14.0"
 
 [tool.poetry.dev-dependencies]
